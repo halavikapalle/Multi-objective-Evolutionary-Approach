@@ -11,7 +11,7 @@ DB_NAME = "mec_history.db"
 
 def init_db():
     with sqlite3.connect(DB_NAME) as conn:
-        conn.execute('''CREATE TABLE IF NOT EXISTS history 
+        conn.execute('''CREATE TABLE IF NOT EXISTS history
             (id INTEGER PRIMARY KEY AUTOINCREMENT,
              timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
              tasks INTEGER,
@@ -19,7 +19,8 @@ def init_db():
              avg_latency REAL,
              avg_energy REAL,
              solutions_found INTEGER)''')
-    conn.close()
+    print("Database initialized successfully")
+init_db()
 
 @app.route('/')
 def dashboard():
@@ -94,7 +95,7 @@ def toggle_auto():
 # ... (keep existing /history and /run-optimization routes)
 
 if __name__ == '__main__':
-    init_db()
+    
     # Start the background thread
     threading.Thread(target=background_optimizer, daemon=True).start()
     app.run(debug=True)
